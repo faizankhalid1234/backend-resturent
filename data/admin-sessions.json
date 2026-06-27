@@ -1,0 +1,20 @@
+{
+  "05bd13094acfa821e73e3935f6dbd1b250dec2e53bcd2637ce3e4b9dbb7999ea": {
+    "userId": "admin-seed",
+    "email": "admin@bhandukhan.com",
+    "name": "Admin",
+    "createdAt": "2026-06-24T09:54:45.167Z"
+  },
+  "131c578eb1e1e0b757b6a9239018ed7a6f98a8bc4192751266540d6c7b5377a7": {
+    "userId": "admin-seed",
+    "email": "admin@bhandukhan.com",
+    "name": "Admin",
+    "createdAt": "2026-06-24T10:07:49.265Z"
+  },
+  "7108224226684b807eb9502c825e90fd9e67c49624435f5f367843381c262fac": {
+    "userId": "admin-seed",
+    "email": "admin@bhandukhan.com",
+    "name": "Admin",
+    "createdAt": "2026-06-24T10:08:29.616Z"
+  }
+}

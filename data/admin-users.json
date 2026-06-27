@@ -1,0 +1,9 @@
+[
+  {
+    "id": "admin-seed",
+    "name": "Admin",
+    "email": "admin@bhandukhan.com",
+    "passwordHash": "240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9",
+    "createdAt": "2026-06-24T09:54:18.682Z"
+  }
+]
