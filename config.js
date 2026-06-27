@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import os from "os";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -29,7 +30,30 @@ loadEnvFile();
 export const PORT = Number(process.env.PORT) || 3001;
 export const MONGODB_URI = process.env.MONGODB_URI || process.env.MONGO_URI || "";
 export const MONGODB_DB = process.env.MONGODB_DB || "ghazi_restaurant";
-export const DATA_DIR = path.join(__dirname, "data");
+
+const envDataDir = process.env.DATA_DIR;
+let dataDir;
+if (envDataDir) {
+  dataDir = envDataDir;
+} else {
+  const defaultDataDir = path.join(__dirname, "data");
+  try {
+    fs.mkdirSync(defaultDataDir, { recursive: true });
+    fs.accessSync(defaultDataDir, fs.constants.W_OK);
+    dataDir = defaultDataDir;
+  } catch (err) {
+    const tmpDataDir = path.join(os.tmpdir(), "bhandu-khan-data");
+    try {
+      fs.mkdirSync(tmpDataDir, { recursive: true });
+      dataDir = tmpDataDir;
+      console.warn(`Data dir not writable; falling back to tmp dir: ${dataDir}`);
+    } catch (e) {
+      dataDir = defaultDataDir;
+    }
+  }
+}
+
+export const DATA_DIR = dataDir;
 export const ORDERS_FILE = path.join(DATA_DIR, "orders.json");
 export const ADMIN_USERS_FILE = path.join(DATA_DIR, "admin-users.json");
 export const ADMIN_SESSIONS_FILE = path.join(DATA_DIR, "admin-sessions.json");
@@ -41,16 +65,9 @@ export const DEFAULT_ADMIN = {
   name: "Admin",
 };
 
-const DEFAULT_CORS_ORIGINS = [
-  "http://localhost:5173",
-  "http://localhost:5174",
-  "http://127.0.0.1:5173",
-  "http://127.0.0.1:5174",
-];
-
 const EXTRA_CORS_ORIGINS = (process.env.CORS_ORIGINS || process.env.CORS_ORIGIN || "")
   .split(",")
   .map((value) => value.trim())
   .filter(Boolean);
 
-export const CORS_ORIGINS = [...new Set([...DEFAULT_CORS_ORIGINS, ...EXTRA_CORS_ORIGINS])];
+export const CORS_ORIGINS = [...new Set(EXTRA_CORS_ORIGINS)];
